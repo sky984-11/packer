@@ -8,7 +8,7 @@ source "vsphere-iso" "this" {
 
   vm_name = var.vm_name
   guest_os_type = "ubuntu64Guest"
-
+  ssh_host = var.vm_ip
   ssh_username = var.ssh_username
   ssh_password = var.ssh_password
   ssh_timeout  = "20m"
