@@ -49,7 +49,7 @@ def generate_file(
           network:
             version: 2
             ethernets:
-              ens160:
+              ens192:
                 dhcp4: false
                 addresses: [{ip}/{cidr}]
                 routes:
