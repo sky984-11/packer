@@ -49,7 +49,7 @@ packer build \
   ```py
   boot_command = [
   "c",
-  "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=45.67.201.205::45.67.201.193:255.255.255.240:tf-edu-ubuntu:ens192:none",
+  "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=45.67.201.205::45.67.201.193:255.255.255.240:tf-edu-ubuntu:ens192:none dns=8.8.8.8",
   "<enter>",
   "initrd /casper/initrd",
   "<enter>",
