@@ -30,16 +30,17 @@ source "vsphere-iso" "this" {
     network =  var.network_name
     network_card = "vmxnet3"
   }
-  http_directory = "http"
+  http_directory = "http/ubuntu/22.04"
   boot_wait = "5s"
 
   boot_command = [
-    "<esc><wait>",
-    "<esc><wait>",
-    "e<wait>",
-    "<down><down><down><end>",
-    " autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ---<wait>",
-    "<f10>"
+    "c",
+    "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
+    "<enter>",
+    "initrd /casper/initrd",
+    "<enter>",
+    "boot",
+    "<enter>"
   ]
 }
 
