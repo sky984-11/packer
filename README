@@ -1,0 +1,19 @@
+## 下载packer
+
+```sh
+wget https://releases.hashicorp.com/packer/1.14.3/packer_1.14.3_linux_amd64.zip
+unzip packer_1.14.3_linux_amd64.zip
+mv packer /usr/local/bin/packer
+```
+
+## 插件安装
+
+```sh
+packer plugins install github.com/hashicorp/vsphere
+```
+
+## 构建
+
+```sh
+packer build -var 'vm_name=tf-edu-ubuntu' -var 'host_name=ubuntu4' -var 'vm_cpus=2' -var 'vm_ram=2048' -var 'vm_disk_size=22144' .
+```

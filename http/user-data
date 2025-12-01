@@ -1,0 +1,24 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: ubuntu
+    username: vagrant
+    password: "$6$rounds=4096$abcd1234$FZB6zNE9Y7sLal5MJ1YwGbAEyY6WjMDopQ1jqoqnQfNwWqbwaVrZ7dZckuMZZRT4gO5baPRyjlUgoh7x2c7ab/" 
+  locale: en_US
+  keyboard:
+    layout: us
+  ssh:
+    install-server: yes
+  storage:
+    layout:
+      name: direct
+  packages:
+    - qemu-guest-agent
+    - curl
+    - vim
+  user-data:
+    timezone: Asia/Shanghai
+  late-commands:
+    - curtin in-target --target=/target systemctl enable qemu-guest-agent
+
