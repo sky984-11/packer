@@ -33,7 +33,7 @@ packer build \
   -var 'vm_cpus=2' \
   -var 'vm_ram=2048' \
   -var 'vm_disk_size=22144' \
-  ./builds/ubuntu
+  ./builds/ubuntu/22.04
 ```
 
 ## 注意事项
