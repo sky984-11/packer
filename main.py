@@ -1,14 +1,21 @@
 import subprocess
 import sys
-from script.pre import generate_file 
+from script.pre import generate_file ,encrypt_password
 
 
 
 def run_packer_build():
     # 构建 packer 命令参数列表（推荐使用列表形式避免 shell 注入和空格问题）
+    hostname = "tf-edu-ubuntu"
+    vm_ip = "10.4.10.100"
+    vm_gateway = "10.4.10.1"
+    vm_netmask = "255.255.255.0"
+    vm_dns = "10.4.10.1"
+    ssh_username = "ubuntu"
+    ssh_password = "test123"
     generate_file(
-    hostname="tf-edu-ubuntu", ip="10.4.10.100", gateway="10.4.10.1", netmask="255.255.255.0", dns="10.4.10.1",
-    user="ubuntu", password="test123", iso_type="ubuntu"
+        hostname=hostname, ip=vm_ip, gateway=vm_gateway, netmask=vm_netmask, dns=vm_dns,
+        user=ssh_username, password=ssh_password, iso_type="ubuntu"
     )
     cmd = [
         "packer", "build",
@@ -19,13 +26,13 @@ def run_packer_build():
         "-var", "datastore=HK_DATA",
         "-var", "network_name=VLAN 10",
         "-var", "iso_path=[HK_DATA] ISO/ubuntu-22.04.5-live-server-amd64.iso",
-        "-var", "vm_name=tf-edu-ubuntu",
-        "-var", "host_name=tf-edu-ubuntu",
+        "-var", f"vm_name={hostname}",
+        "-var", f"host_name={hostname}",
         "-var", "vm_cpus=2",
         "-var", "vm_ram=2048",
         "-var", "vm_disk_size=22144",
-        "-var", "ssh_username=ubuntu",
-        "-var", f"ssh_password=$6$0ovtYUWS7QOv0tPi$E/vBi.DcAvKrheYl/3K0w/.ZlzD1MM6PGHa89c2jv7qA1pV//abEHMdpDfC1E27pFJ10t6cBt0Bt7Y9s7bwCO/",
+        "-var", f"ssh_username={ssh_username}",
+        "-var", f"ssh_password={encrypt_password(ssh_password)}",
         "./builds/ubuntu/22.04"
     ]
 

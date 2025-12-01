@@ -12,7 +12,7 @@ def generate_file(
     user: str, password: str, iso_type: str, output_dir: str = "http"
 ):
     """在本地项目目录生成自动化安装配置文件"""
-    hashed_pw = encrypt_password(password)
+    hashed_pw = password
     
     # 确保输出目录存在
     target_dir = os.path.join(output_dir, f'{iso_type}/22.04')

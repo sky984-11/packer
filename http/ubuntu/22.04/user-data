@@ -4,7 +4,7 @@ autoinstall:
     chpasswd:
       expire: false
       list:
-        - root:$6$rounds=656000$bp346LZRavnF5Uvs$gPTT0MwMsVTtLRbdf47UGppvOklS06LEBYweX1zBeN.eMJ6dDpGjgZNt/VqFnCFVx.d5OSvsEN7sf3vs5Z9/1/
+        - root:$6$rounds=656000$cPTI357WR2glLYQt$69b62M3KvZxbGXMBvbImsI4WIg42T6UJpw0cbhwR7de9BScc6ccHUQh0iV.t1mMnLiFdDCPJuXjnOthGyQppq.
   version: 1
   locale: en_US.UTF-8
   keyboard:
@@ -13,7 +13,7 @@ autoinstall:
   identity:
     hostname: tf-edu-ubuntu
     username: ubuntu
-    password: "$6$rounds=656000$bp346LZRavnF5Uvs$gPTT0MwMsVTtLRbdf47UGppvOklS06LEBYweX1zBeN.eMJ6dDpGjgZNt/VqFnCFVx.d5OSvsEN7sf3vs5Z9/1/"
+    password: "$6$rounds=656000$cPTI357WR2glLYQt$69b62M3KvZxbGXMBvbImsI4WIg42T6UJpw0cbhwR7de9BScc6ccHUQh0iV.t1mMnLiFdDCPJuXjnOthGyQppq."
   ssh:
     install-server: true
     allow-pw: true
