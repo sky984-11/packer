@@ -33,6 +33,7 @@ packer build \
   -var 'vm_cpus=2' \
   -var 'vm_ram=2048' \
   -var 'vm_disk_size=22144' \
+  -var 'ssh_password=$6$0ovtYUWS7QOv0tPi$E/vBi.DcAvKrheYl/3K0w/.ZlzD1MM6PGHa89c2jv7qA1pV//abEHMdpDfC1E27pFJ10t6cBt0Bt7Y9s7bwCO/' \
   ./builds/ubuntu/22.04
 ```
 
