@@ -1,24 +1,38 @@
 #cloud-config
 autoinstall:
+  user-data:
+    chpasswd:
+      expire: false
+      list:
+        - root:$6$rounds=656000$bp346LZRavnF5Uvs$gPTT0MwMsVTtLRbdf47UGppvOklS06LEBYweX1zBeN.eMJ6dDpGjgZNt/VqFnCFVx.d5OSvsEN7sf3vs5Z9/1/
   version: 1
-  identity:
-    hostname: ubuntu
-    username: vagrant
-    password: "$6$rounds=4096$abcd1234$FZB6zNE9Y7sLal5MJ1YwGbAEyY6WjMDopQ1jqoqnQfNwWqbwaVrZ7dZckuMZZRT4gO5baPRyjlUgoh7x2c7ab/" 
-  locale: en_US
+  locale: en_US.UTF-8
   keyboard:
     layout: us
+  timezone: Asia/Hong_Kong
+  identity:
+    hostname: tf-edu-ubuntu
+    username: ubuntu
+    password: "$6$rounds=656000$bp346LZRavnF5Uvs$gPTT0MwMsVTtLRbdf47UGppvOklS06LEBYweX1zBeN.eMJ6dDpGjgZNt/VqFnCFVx.d5OSvsEN7sf3vs5Z9/1/"
   ssh:
-    install-server: yes
-  storage:
-    layout:
-      name: direct
+    install-server: true
+    allow-pw: true
   packages:
-    - qemu-guest-agent
-    - curl
+    - openssh-server
     - vim
-  user-data:
-    timezone: Asia/Shanghai
-  late-commands:
-    - curtin in-target --target=/target systemctl enable qemu-guest-agent
-
+    - inetutils-ping
+  source:
+    search_drivers: false
+    id: ubuntu-server-minimal
+  network:
+    version: 2
+    ethernets:
+      ens160:
+        dhcp4: false
+        addresses: [10.4.10.100/24]
+        routes:
+          - to: default
+            via: 10.4.10.1
+        nameservers:
+          addresses: [10.4.10.1]
+  ssh_pwauth: true

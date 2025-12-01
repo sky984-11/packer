@@ -1,24 +1,3 @@
-# === 动态渲染 user-data ===
-locals {
-  # 渲染 user-data 模板
-  rendered_user_data = templatefile("${path.root}/http/ubuntu/22.04/user-data.tftpl", {
-    host_name     = var.host_name
-    ssh_username  = ubuntu
-    ssh_password  = var.ssh_password
-  })
-
-}
-
-# 在构建前生成 user-data 文件（覆盖原文件）
-provisioner "shell-local" {
-  inline = [
-    # 写入渲染后的内容（注意转义换行和特殊字符）
-    "cat > '${path.root}/http/ubuntu/22.04/user-data' << 'EOF'",
-    local.rendered_user_data,
-    "EOF"
-  ]
-}
-
 source "vsphere-iso" "this" {
   vcenter_server    = var.vsphere_server
   username          = var.vsphere_user

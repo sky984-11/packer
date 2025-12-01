@@ -16,7 +16,8 @@ packer plugins install github.com/hashicorp/vsphere
 ```
 
 ## 构建ubuntu虚拟机
-
+# ssh_password：test123
+# network_mode: dhcp/static
 ```sh
 packer build \
   -var 'vsphere_server=10.4.10.140' \
@@ -33,7 +34,9 @@ packer build \
   -var 'vm_cpus=2' \
   -var 'vm_ram=2048' \
   -var 'vm_disk_size=22144' \
+  -var 'ssh_user=ubuntu' \
   -var 'ssh_password=$6$0ovtYUWS7QOv0tPi$E/vBi.DcAvKrheYl/3K0w/.ZlzD1MM6PGHa89c2jv7qA1pV//abEHMdpDfC1E27pFJ10t6cBt0Bt7Y9s7bwCO/' \
+  -var 'network_mode=dhcp' \
   ./builds/ubuntu/22.04
 ```
 
