@@ -7,10 +7,10 @@ from script.pre import generate_file ,encrypt_password
 def run_packer_build():
     # 构建 packer 命令参数列表（推荐使用列表形式避免 shell 注入和空格问题）
     hostname = "tf-edu-ubuntu"
-    vm_ip = "10.4.10.100"
-    vm_gateway = "10.4.10.1"
-    vm_netmask = "255.255.255.0"
-    vm_dns = "10.4.10.1"
+    vm_ip = "45.67.201.205"
+    vm_gateway = "45.67.201.193"
+    vm_netmask = "255.255.255.240"
+    vm_dns = "8.8.8.8"
     ssh_username = "ubuntu"
     ssh_password = "test123"
     generate_file(
@@ -24,7 +24,7 @@ def run_packer_build():
         "-var", "vsphere_password=Catixs@3202",
         "-var", "cluster=localhost",
         "-var", "datastore=HK_DATA",
-        "-var", "network_name=VLAN 100",
+        "-var", "network_name=VLAN 3917",
         "-var", "iso_path=[HK_DATA] ISO/ubuntu-22.04.5-live-server-amd64.iso",
         "-var", f"vm_name={hostname}",
         "-var", f"host_name={hostname}",
