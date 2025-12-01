@@ -8,7 +8,6 @@ source "vsphere-iso" "this" {
 
   vm_name = var.vm_name
   guest_os_type = "ubuntu64Guest"
-  ssh_host = var.vm_ip
   ssh_username = var.ssh_username
   ssh_password = var.ssh_password
   ssh_timeout  = "20m"
@@ -34,14 +33,14 @@ source "vsphere-iso" "this" {
   boot_wait = "5s"
 
   boot_command = [
-    "c",
-    "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/'",
-    "<enter>",
-    "initrd /casper/initrd",
-    "<enter>",
-    "boot",
-    "<enter>"
-  ]
+  "c",
+  "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=45.67.201.205::45.67.201.193:255.255.255.240:tf-edu-ubuntu:ens192:none nameserver=8.8.8.8",
+  "<enter>",
+  "initrd /casper/initrd",
+  "<enter>",
+  "boot",
+  "<enter>"
+]
 }
 
 build {
