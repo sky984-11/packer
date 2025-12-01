@@ -53,11 +53,6 @@ variable "vm_disk_size" {
   default = 6144
 }
 
-variable "vm_ip" {
-  type = string
-  default = ""
-}
-
 variable "ssh_username" {
   type = string
   default = ""

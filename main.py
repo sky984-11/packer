@@ -31,7 +31,6 @@ def run_packer_build():
         "-var", "vm_cpus=2",
         "-var", "vm_ram=2048",
         "-var", "vm_disk_size=22144",
-        "-var", f"ssh_host={vm_ip}",
         "-var", f"ssh_username={ssh_username}",
         "-var", f"ssh_password={encrypt_password(ssh_password)}",
         "./builds/ubuntu/22.04"
