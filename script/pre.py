@@ -43,7 +43,6 @@ def generate_file(
             allow-pw: true
           packages:
             - openssh-server
-            - vim
             - inetutils-ping
           source:
             search_drivers: false

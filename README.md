@@ -42,3 +42,18 @@ packer build \
 
 ## 注意事项
 1. packer构建的http网络esxi必须可以访问
+
+
+2. vsphere.pkr.hcl配置
+  # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容即可
+  ```py
+  boot_command = [
+  "c",
+  "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=45.67.201.205::45.67.201.193:255.255.255.240:tf-edu-ubuntu:ens192:none nameserver=8.8.8.8",
+  "<enter>",
+  "initrd /casper/initrd",
+  "<enter>",
+  "boot",
+  "<enter>"
+]
+```
