@@ -67,3 +67,23 @@ variable "iso_path" {
   type = string
   default = ""
 }
+
+variable "vm_ip" {
+  type = string
+  default = ""
+}
+
+variable "vm_gateway" {
+  type = string
+  default = ""
+}
+
+variable "vm_netmask" {
+  type = string
+  default = ""
+}
+
+variable "vm_dns" {
+  type = string
+  default = ""
+}
