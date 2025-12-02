@@ -33,16 +33,27 @@ source "vsphere-iso" "this" {
   boot_wait = "5s"
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [
-        "<esc><wait>",
-        "<esc><wait>",
-        "<enter><wait>",
-        "/install/vmlinuz<wait>",
-        " initrd=/install/initrd.gz",
-        " auto-install/enable=true",
-        " debconf/priority=critical",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
-        " -- <wait>",
-        "<enter><wait>"
+      "<esc><wait>",
+      "install <wait>",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+      "debian-installer=fr_FR.UTF-8 <wait>",
+      "auto <wait>",
+      "locale=fr_FR.UTF-8 <wait>",
+      "kbd-chooser/method=fr <wait>",
+      "keyboard-configuration/xkb-keymap=fr <wait>",
+      "netcfg/get_ipaddress=${var.vm_ip} <wait>",
+      "netcfg/get_netmask=${var.vm_netmask} <wait>",
+      "netcfg/get_gateway=${var.vm_gateway} <wait>",
+      "netcfg/get_nameservers=${var.vm_dns} <wait>",
+      "netcfg/disable_autoconfig=true <wait>",
+      "netcfg/get_hostname=template <wait>",
+      "netcfg/get_domain=catixs.net <wait>",
+      "fb=false <wait>",
+      "debconf/frontend=noninteractive <wait>",
+      "console-setup/ask_detect=false <wait>",
+      "console-keymaps-at/keymap=fr <wait>",
+      "grub-installer/bootdev=/dev/sda <wait>",
+      "<enter><wait>"
 ]
 }
 
