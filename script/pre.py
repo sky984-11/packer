@@ -58,6 +58,8 @@ def generate_file(
                 nameservers:
                   addresses: [{dns}]
           ssh_pwauth: true
+          late-commands:
+            - sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /target/etc/ssh/sshd_config
         """).strip()
 
         # 写入本地文件
