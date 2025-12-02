@@ -148,11 +148,11 @@ def generate_file(
         """).strip()
 
         # 写入本地文件
-        preseed_path = os.path.join(target_dir, "preseed.cfg")
+        preseed_path = os.path.join(target_dir + '/12/', "preseed.cfg")
         with open(preseed_path, "w") as f:
             f.write(preseed)
-            
-        print(f"✅ [本地] 已生成 Debian preseed.cfg 到 {target_dir}/")
+
+        print(f"✅ [本地] 已生成 Debian preseed.cfg 到 {target_dir}/12/")
 
     else:
         raise RuntimeError(f"未知镜像类型: {iso_type}")
