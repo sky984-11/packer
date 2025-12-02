@@ -15,7 +15,7 @@ def generate_file(
     hashed_pw = password
     
     # 确保输出目录存在
-    target_dir = os.path.join(output_dir, f'{iso_type}/22.04')
+    target_dir = os.path.join(output_dir, f'{iso_type}')
     os.makedirs(target_dir, exist_ok=True)
     
     if iso_type == "ubuntu":
@@ -66,9 +66,9 @@ def generate_file(
         """).strip()
 
         # 写入本地文件
-        user_data_path = os.path.join(target_dir, "user-data")
-        meta_data_path = os.path.join(target_dir, "meta-data")
-        
+        user_data_path = os.path.join(target_dir + '/22.04', "user-data")
+        meta_data_path = os.path.join(target_dir + '/22.04', "meta-data")
+
         with open(user_data_path, "w") as f:
             f.write(user_data)
             
