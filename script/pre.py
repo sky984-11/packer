@@ -50,16 +50,19 @@ def generate_file(
                     via: {gateway}
                 nameservers:
                   addresses: [{dns}]
-          user-data:
-            package_upgrade: true
-            timezone: Europe/Paris
-            users:
-              - name: ubuntu
-                passwd: {hashed_pw}
-                groups: [adm, cdrom, dip, plugdev, lxd, sudo]
-                lock-passwd: false
-                sudo: ALL=(ALL) NOPASSWD:ALL
-                shell: /bin/bash
+          users:
+            - default
+            - name: ubuntu
+              lock_passwd: false
+              passwd: {encrypt_password(hashed_pw)}
+          write_files:
+            - path: /etc/ssh/sshd_config
+              content: |
+                PermitRootLogin yes
+          identity:
+            hostname: {hostname}
+            username: ubuntu
+            password: {encrypt_password(hashed_pw)}
         """).strip()
 
         # 写入本地文件
