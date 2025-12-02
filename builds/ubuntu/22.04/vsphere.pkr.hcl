@@ -29,7 +29,7 @@ source "vsphere-iso" "this" {
     network =  var.network_name
     network_card = "vmxnet3"
   }
-  http_directory = "http/ubuntu/22.04"
+  http_directory = "http/${var.os_type}/${var.os_version}"
   boot_wait = "5s"
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [

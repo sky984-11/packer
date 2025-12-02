@@ -87,3 +87,13 @@ variable "vm_dns" {
   type = string
   default = ""
 }
+
+variable "os_type" {
+  type = string
+  default = ""
+}
+
+variable "os_version" {
+  type = string
+  default = ""
+}

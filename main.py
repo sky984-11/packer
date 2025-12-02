@@ -24,9 +24,12 @@ def run_packer_build():
     vm_ram = "2048"
     vm_disk_size = "22144"
 
+    os_type = "debian"
+    os_version = "12"
+
     generate_file(
         hostname=host_name, ip=vm_ip, gateway=vm_gateway, netmask=vm_netmask, dns=vm_dns,
-        user=ssh_username, password=ssh_password, iso_type="debian"
+        user=ssh_username, password=ssh_password, iso_type=os_type
     )
     cmd = [
         "packer", "build",
@@ -36,7 +39,7 @@ def run_packer_build():
         "-var", f"cluster=localhost",
         "-var", f"datastore={datastore}",
         "-var", f"network_name={network_name}",
-        "-var", "iso_path=[DATA] ISO/debian-12.iso",   #后面调整为映射
+        "-var", f"iso_path=[DATA] ISO/{os_type}-{os_version}.iso",   #后面调整为映射
         "-var", f"vm_name={host_name}",
         "-var", f"host_name={host_name}",
         "-var", f"vm_cpus={vm_cpus}",
@@ -48,7 +51,9 @@ def run_packer_build():
         "-var", f"vm_gateway={vm_gateway}",
         "-var", f"vm_netmask={vm_netmask}",
         "-var", f"vm_dns={vm_dns}",
-        "./builds/debian/12"
+        "-var", f"os_type={os_type}",
+        "-var", f"os_version={os_version}",
+        f"./builds/{os_type}/{os_version}"
     ]
 
     try:
