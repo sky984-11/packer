@@ -99,7 +99,8 @@ def generate_file(
             d-i netcfg/get_domain string local
 
             # Root 用户
-            d-i passwd/root-password-crypted password {hashed_pw}
+            d-i passwd/root-password password {hashed_pw}
+            d-i passwd/root-password-again password {hashed_pw}
             d-i passwd/root-login boolean true
 
             # 普通用户

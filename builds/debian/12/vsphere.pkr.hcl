@@ -33,28 +33,29 @@ source "vsphere-iso" "this" {
   boot_wait = "5s"
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [
-      "<esc><wait>",
-      "install <wait>",
-      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
-      "debian-installer=fr_FR.UTF-8 <wait>",
-      "auto <wait>",
-      "locale=fr_FR.UTF-8 <wait>",
-      "kbd-chooser/method=fr <wait>",
-      "keyboard-configuration/xkb-keymap=fr <wait>",
-      "netcfg/get_ipaddress=${var.vm_ip} <wait>",
-      "netcfg/get_netmask=${var.vm_netmask} <wait>",
-      "netcfg/get_gateway=${var.vm_gateway} <wait>",
-      "netcfg/get_nameservers=${var.vm_dns} <wait>",
-      "netcfg/disable_autoconfig=true <wait>",
-      "netcfg/get_hostname=template <wait>",
-      "netcfg/get_domain=catixs.net <wait>",
-      "fb=false <wait>",
-      "debconf/frontend=noninteractive <wait>",
-      "console-setup/ask_detect=false <wait>",
-      "console-keymaps-at/keymap=fr <wait>",
-      "grub-installer/bootdev=/dev/sda <wait>",
-      "<enter><wait>"
-]
+    "<esc><wait5>",
+    "install ",
+    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+    "debian-installer=en_US.UTF-8 ",
+    "auto ",
+    "locale=en_US.UTF-8 ",
+    "keyboard-configuration/modelcode=SKIP ",
+    "keyboard-configuration/layoutcode=us ",
+    "keyboard-configuration/variantcode= ",
+    "netcfg/get_ipaddress=${var.vm_ip} ",
+    "netcfg/get_netmask=${var.vm_netmask} ",
+    "netcfg/get_gateway=${var.vm_gateway} ",
+    "netcfg/get_nameservers=${var.vm_dns} ",
+    "netcfg/disable_autoconfig=true ",
+    "netcfg/get_hostname=${var.host_name} ",
+    "netcfg/get_domain=catixs.net ",
+    "fb=false ",
+    "debconf/frontend=noninteractive ",
+    "console-setup/ask_detect=false ",
+    "console-keymaps-at/keymap=us ",
+    "grub-installer/bootdev=/dev/sda",
+    "<enter><wait>"
+  ]
 }
 
 build {
