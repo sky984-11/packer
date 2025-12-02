@@ -11,7 +11,7 @@ def run_packer_build():
     vm_gateway = "45.67.201.193"
     vm_netmask = "255.255.255.240"
     vm_dns = "8.8.8.8"
-    ssh_username = "root"
+    ssh_username = "ubuntu"
     ssh_password = "test123"
     generate_file(
         hostname=hostname, ip=vm_ip, gateway=vm_gateway, netmask=vm_netmask, dns=vm_dns,
