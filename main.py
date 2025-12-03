@@ -50,7 +50,7 @@ def run_packer_build():
         packer_vars.append("-var")
         packer_vars.append(f"{k}={v}")
 
-    # ISO 路径（后续可扩展函数自动映射）
+    # ISO 路径（后续可扩展函数自动映射），需要和ESXI中镜像路径保持一致
     iso_path = f"[DATA] ISO/{config['os_type']}-{config['os_version']}.iso"
 
     packer_vars.extend([
