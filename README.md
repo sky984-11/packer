@@ -55,3 +55,4 @@ python3 main.py
 ## 赞赏支持
 
 如果您喜欢这个项目，可以赞赏一下支持我们，谢谢您的支持！ღ( ´･ᴗ･` )ღ
+<img width="911" height="590" alt="image" src="https://github.com/user-attachments/assets/b0dacd84-8eda-4e90-bcc9-2cdc90a2ceb7" />
