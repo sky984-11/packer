@@ -1,5 +1,6 @@
 # 基于 Packer 的 ESXI 自动化部署
 这是一个使用 Packer 实现 VMware ESXi 虚拟机自动化部署的项目。
+支持debian12和ubuntu22.04系统自动化安装(其他系统慢慢增加中......)
 
 ## 下载packer
 
@@ -19,41 +20,8 @@ packer plugins install github.com/hashicorp/vsphere
 # ssh_password：test123
 # network_mode: dhcp/static
 ```sh
-packer build \
-  -var 'vsphere_server=10.4.10.140' \
-  -var 'vsphere_user=root' \
-  -var 'vsphere_password=Catixs@3202' \
-  -var 'cluster=localhost' \
-  -var 'datastore=HK_DATA' \
-  -var 'network_name=VLAN 10' \
-  -var 'ssh_username=vagrant' \
-  -var 'ssh_password=vagrant' \
-  -var 'iso_path=[HK_DATA] ISO/ubuntu-22.04.5-live-server-amd64.iso' \
-  -var 'vm_name=tf-edu-ubuntu' \
-  -var 'host_name=ubuntu-test' \
-  -var 'vm_cpus=2' \
-  -var 'vm_ram=2048' \
-  -var 'vm_disk_size=22144' \
-  -var 'ssh_user=ubuntu' \
-  -var 'ssh_password=$6$0ovtYUWS7QOv0tPi$E/vBi.DcAvKrheYl/3K0w/.ZlzD1MM6PGHa89c2jv7qA1pV//abEHMdpDfC1E27pFJ10t6cBt0Bt7Y9s7bwCO/' \
-  -var 'network_mode=dhcp' \
-  ./builds/ubuntu/22.04
+python3 main.py
 ```
 
 ## 注意事项
 1. packer构建的http网络esxi必须可以访问
-
-
-2. vsphere.pkr.hcl配置
-  # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容即可
-  ```py
-  boot_command = [
-  "c",
-  "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=45.67.201.205::45.67.201.193:255.255.255.240:tf-edu-ubuntu:ens192:none",
-  "<enter>",
-  "initrd /casper/initrd",
-  "<enter>",
-  "boot",
-  "<enter>"
-]
-```
