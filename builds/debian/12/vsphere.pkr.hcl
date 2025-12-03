@@ -8,7 +8,6 @@ source "vsphere-iso" "this" {
 
   vm_name = var.vm_name
   guest_os_type = "debian12_64Guest"
-  wait_for_ip = false
   ssh_username = var.ssh_username
   ssh_password = var.ssh_password
   ssh_host = var.vm_ip

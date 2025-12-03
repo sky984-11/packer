@@ -107,7 +107,8 @@ def generate_file(
             d-i passwd/make-user boolean true
             d-i passwd/user-fullname string User
             d-i passwd/username string debian
-            d-i passwd/user-password-crypted password {hashed_pw}
+            d-i passwd/user-password password {hashed_pw}
+            d-i passwd/user-password-again password {hashed_pw}
             d-i user-uid string 1000
 
             ### --- 磁盘自动分区 ---
