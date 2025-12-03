@@ -4,7 +4,7 @@
 目前支持以下 Linux 发行版的无人值守安装：
   ·Debian 12
   ·DUbuntu 22.04 LTS
-  （更多系统陆续适配中…）
+  （更多系统陆续适配中…，欢迎提交issues）
 
 ## 📦 项目获取
 
@@ -50,3 +50,8 @@ python3 main.py
 ## 📸 部署效果截图
 
 <img width="665" height="535" alt="image" src="https://github.com/user-attachments/assets/fedb3e7f-dc4c-4ea3-9e36-6925aacc1f24" />
+
+
+## 赞赏支持
+
+如果您喜欢这个项目，可以赞赏一下支持我们，谢谢您的支持！ღ( ´･ᴗ･` )ღ
