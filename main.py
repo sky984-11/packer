@@ -1,93 +1,101 @@
 import subprocess
 import sys
-from script.pre import generate_file ,encrypt_password
-
+from script.pre import generate_file, encrypt_password
 
 
 def run_packer_build():
-    # 构建 packer 命令参数列表（推荐使用列表形式避免 shell 注入和空格问题）
-    host_name = "tf-debian"
-    vm_ip = "45.67.201.205"
-    vm_gateway = "45.67.201.193"
-    vm_netmask = "255.255.255.240"
-    vm_dns = "8.8.8.8"
-    ssh_username = "debian"
-    ssh_password = "test123"
 
-    vsphere_server = "10.4.10.140"
-    vsphere_user = "root"
-    vsphere_password = "Catixs@3202"
-    datastore = "HK_DATA"
-    vlan = "VLAN 3917"
+    # 所有构建参数集中到一个字典，方便维护
+    config = {
+        "host_name": "tf-debian",
+        "vm_ip": "45.67.201.205",
+        "vm_gateway": "45.67.201.193",
+        "vm_netmask": "255.255.255.240",
+        "vm_dns": "8.8.8.8",
+        "ssh_username": "debian",
+        "ssh_password": "test123",
 
-    vm_cpus = "2"
-    vm_ram = "2048"
-    vm_disk_size = "22144"
+        "vsphere_server": "10.4.10.140",
+        "vsphere_user": "root",
+        "vsphere_password": "Catixs@3202",
+        "datastore": "HK_DATA",
+        "network_name": "VLAN 3917",
+        "cluster": "localhost",
 
-    os_type = "debian"
-    os_version = "12"
+        "vm_cpus": "2",
+        "vm_ram": "2048",
+        "vm_disk_size": "22144",
 
-    annotation = "Created by Packer"
+        "os_type": "debian",
+        "os_version": "12",
 
+        "annotation": "Created by Packer"
+    }
+
+    # 生成 preseed/autoinstall 文件
     generate_file(
-        hostname=host_name, ip=vm_ip, gateway=vm_gateway, netmask=vm_netmask, dns=vm_dns,
-        user=ssh_username, password=ssh_password, iso_type=os_type
+        hostname=config["host_name"],
+        ip=config["vm_ip"],
+        gateway=config["vm_gateway"],
+        netmask=config["vm_netmask"],
+        dns=config["vm_dns"],
+        user=config["ssh_username"],
+        password=config["ssh_password"],
+        iso_type=config["os_type"]
     )
-    cmd = [
-        "packer", "build",
-        "-var", f"vsphere_server={vsphere_server}",
-        "-var", f"vsphere_user={vsphere_user}",
-        "-var", f"vsphere_password={vsphere_password}",
-        "-var", f"cluster=localhost",
-        "-var", f"datastore={datastore}",
-        "-var", f"network_name={vlan}",
-        "-var", f"iso_path=[DATA] ISO/{os_type}-{os_version}.iso",   #后面调整为映射
-        "-var", f"vm_name={host_name}",
-        "-var", f"host_name={host_name}",
-        "-var", f"vm_cpus={vm_cpus}",
-        "-var", f"vm_ram={vm_ram}",
-        "-var", f"vm_disk_size={vm_disk_size}",
-        "-var", f"ssh_username={ssh_username}",
-        "-var", f"ssh_password={ssh_password}",
-        "-var", f"vm_ip={vm_ip}",
-        "-var", f"vm_gateway={vm_gateway}",
-        "-var", f"vm_netmask={vm_netmask}",
-        "-var", f"vm_dns={vm_dns}",
-        "-var", f"os_type={os_type}",
-        "-var", f"os_version={os_version}",
-        "-var", f"annotation={annotation}",
-        f"./builds/{os_type}/{os_version}"
-    ]
+
+    # 自动构建 packer -var 参数
+    packer_vars = []
+    for k, v in config.items():
+        packer_vars.append("-var")
+        packer_vars.append(f"{k}={v}")
+
+    # ISO 路径（后续可扩展函数自动映射）
+    iso_path = f"[DATA] ISO/{config['os_type']}-{config['os_version']}.iso"
+
+    packer_vars.extend([
+        "-var", f"iso_path={iso_path}",
+        f"./builds/{config['os_type']}/{config['os_version']}"
+    ])
+
+    # 最终 Packager 命令
+    cmd = ["packer", "build"] + packer_vars
+
+    print("🚀 Running Packer build...\n")
+    print("➡️ 执行命令：")
+    print(" ".join(cmd), "\n")
 
     try:
-        # 执行命令并实时输出 stdout/stderr
-        print("Running Packer build...")
+        # 执行命令
         process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            bufsize=1  # 行缓冲
+            bufsize=1
         )
 
-        # 实时打印输出
+        # 实时输出
         for line in process.stdout:
-            print(line, end='')
+            print(line, end="")
 
+        # 等待执行结束
         process.wait()
 
         if process.returncode == 0:
-            print("\n✅ Packer build succeeded!")
+            print("\n🎉 Packer build succeeded!")
         else:
             print(f"\n❌ Packer build failed with return code {process.returncode}")
             sys.exit(process.returncode)
 
     except FileNotFoundError:
-        print("❌ Error: 'packer' command not found. Please ensure Packer is installed and in your PATH.")
+        print("❌ Error: 'packer' command not found. Please ensure it is installed and in PATH.")
         sys.exit(1)
+
     except Exception as e:
-        print(f"❌ Unexpected error: {e}")
+        print(f"🔥 Unexpected error: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     run_packer_build()
