@@ -48,7 +48,7 @@ source "vsphere-iso" "this" {
       "netcfg/get_gateway=${var.vm_gateway} <wait>",
       "netcfg/get_nameservers=${var.vm_dns} <wait>",
       "netcfg/disable_autoconfig=true <wait>",
-      "netcfg/get_hostname=${var.host_name} <wait>",
+      "netcfg/get_hostname=${var.vm_name} <wait>",
       "netcfg/get_domain=catixs.net <wait>",
       "fb=false <wait>",
       "debconf/frontend=noninteractive <wait>",

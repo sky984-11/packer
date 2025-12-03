@@ -7,7 +7,7 @@ def run_packer_build():
 
     # 所有构建参数集中到一个字典，方便维护
     config = {
-        "host_name": "tf-debian",
+        "vm_name": "tf-debian",
         "vm_ip": "45.67.201.205",
         "vm_gateway": "45.67.201.193",
         "vm_netmask": "255.255.255.240",
@@ -34,7 +34,7 @@ def run_packer_build():
 
     # 生成 preseed/autoinstall 文件
     generate_file(
-        hostname=config["host_name"],
+        hostname=config["vm_name"],
         ip=config["vm_ip"],
         gateway=config["vm_gateway"],
         netmask=config["vm_netmask"],

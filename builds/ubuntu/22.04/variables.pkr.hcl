@@ -33,10 +33,6 @@ variable "vm_name" {
   default = ""
 }
 
-variable "host_name" {
-  type = string
-  default = ""
-}
 
 variable "vm_cpus" {
   type = number
