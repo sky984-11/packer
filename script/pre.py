@@ -140,6 +140,10 @@ def generate_file(
             d-i mirror/http/directory string /debian
             d-i mirror/http/proxy string
 
+            ### --- 禁用扫描额外安装介质 ---
+            d-i apt-setup/cdrom/set-first boolean false
+            d-i apt-setup/cdrom/autodetect boolean false
+
             ### --- GRUB 引导 ---
             d-i grub-installer/only_debian boolean true
             d-i grub-installer/bootdev string /dev/sda
