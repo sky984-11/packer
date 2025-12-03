@@ -16,10 +16,9 @@ mv packer /usr/local/bin/packer
 packer plugins install github.com/hashicorp/vsphere
 ```
 
-## 构建ubuntu虚拟机
-# ssh_password：test123
-# network_mode: dhcp/static
+## 运行
 ```sh
+# 运行前在main.py中配置好参数
 python3 main.py
 ```
 
