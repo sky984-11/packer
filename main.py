@@ -18,7 +18,7 @@ def run_packer_build():
     vsphere_user = "root"
     vsphere_password = "Catixs@3202"
     datastore = "HK_DATA"
-    network_name = "VLAN 3917"
+    vlan = "VLAN 3917"
 
     vm_cpus = "2"
     vm_ram = "2048"
@@ -26,6 +26,8 @@ def run_packer_build():
 
     os_type = "debian"
     os_version = "12"
+
+    annotation = "Created by Packer"
 
     generate_file(
         hostname=host_name, ip=vm_ip, gateway=vm_gateway, netmask=vm_netmask, dns=vm_dns,
@@ -38,7 +40,7 @@ def run_packer_build():
         "-var", f"vsphere_password={vsphere_password}",
         "-var", f"cluster=localhost",
         "-var", f"datastore={datastore}",
-        "-var", f"network_name={network_name}",
+        "-var", f"network_name={vlan}",
         "-var", f"iso_path=[DATA] ISO/{os_type}-{os_version}.iso",   #后面调整为映射
         "-var", f"vm_name={host_name}",
         "-var", f"host_name={host_name}",
@@ -53,6 +55,7 @@ def run_packer_build():
         "-var", f"vm_dns={vm_dns}",
         "-var", f"os_type={os_type}",
         "-var", f"os_version={os_version}",
+        "-var", f"annotation={annotation}",
         f"./builds/{os_type}/{os_version}"
     ]
 

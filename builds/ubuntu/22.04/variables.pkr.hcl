@@ -97,3 +97,8 @@ variable "os_version" {
   type = string
   default = ""
 }
+
+variable "annotation" {
+  type = string
+  default = ""
+}

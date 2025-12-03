@@ -7,6 +7,7 @@ source "vsphere-iso" "this" {
   insecure_connection  = true
 
   vm_name = var.vm_name
+  notes = var.annotation
   guest_os_type = "debian12_64Guest"
   ssh_username = var.ssh_username
   ssh_password = var.ssh_password
