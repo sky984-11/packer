@@ -24,3 +24,6 @@ python3 main.py
 
 ## 注意事项
 1. packer构建的http网络esxi必须可以访问
+
+## 部署截图
+<img width="665" height="535" alt="image" src="https://github.com/user-attachments/assets/fedb3e7f-dc4c-4ea3-9e36-6925aacc1f24" />
