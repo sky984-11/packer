@@ -94,6 +94,10 @@ def generate_file(
             d-i netcfg/get_nameservers string {dns}
             d-i netcfg/confirm_static boolean true
 
+            # 禁用 IPv6（可提升 DNS 解析速度）
+            d-i netcfg/disable_autoconfig boolean true
+            d-i netcfg/disable_ipv6 boolean true
+
             ### --- 主机名与用户 ---
             d-i netcfg/get_hostname string {hostname}
             d-i netcfg/get_domain string local
@@ -137,7 +141,10 @@ def generate_file(
             popularity-contest popularity-contest/participate boolean false
 
             d-i apt-setup/use_mirror boolean true
-
+            # 避免下载翻译文件（大幅减少 apt 更新时间）
+            d-i apt-setup/disable-cdrom-entries boolean true
+            d-i apt-setup/services-select multiselect security
+            d-i apt-setup/disable-source-repos boolean true
             d-i mirror/country string manual
             d-i mirror/http/hostname string deb.debian.org
             d-i mirror/http/directory string /debian
