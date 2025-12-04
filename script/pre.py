@@ -79,102 +79,81 @@ def generate_file(
 
     elif iso_type == "debian":
         preseed = textwrap.dedent(f"""
-                  ### --- 基础设置 ---
-                  d-i debian-installer/locale string en_US.UTF-8
-                  d-i console-setup/ask_detect boolean false
-                  d-i keyboard-configuration/xkb-keymap select us
-                  d-i time/zone string Asia/Hong_Kong
+            ### --- 基础设置 ---
+            d-i debian-installer/locale string en_US.UTF-8
+            d-i console-setup/ask_detect boolean false
+            d-i keyboard-configuration/xkb-keymap select us
+            d-i time/zone string Asia/Hong_Kong
 
-                  ### --- 网络配置（静态 IP） ---
-                  d-i netcfg/choose_interface select auto
-                  d-i netcfg/disable_dhcp boolean true
-                  d-i netcfg/get_ipaddress string {ip}
-                  d-i netcfg/get_netmask string {netmask}
-                  d-i netcfg/get_gateway string {gateway}
-                  d-i netcfg/get_nameservers string {dns}
-                  d-i netcfg/confirm_static boolean true
+            ### --- 网络配置 ---
+            d-i netcfg/choose_interface select auto
+            d-i netcfg/disable_dhcp boolean true
+            d-i netcfg/get_ipaddress string {ip}
+            d-i netcfg/get_netmask string {netmask}
+            d-i netcfg/get_gateway string {gateway}
+            d-i netcfg/get_nameservers string {dns}
+            d-i netcfg/confirm_static boolean true
 
-                  # 禁用 IPv6（可提升 DNS 解析速度）
-                  d-i netcfg/disable_autoconfig boolean true
-                  d-i netcfg/disable_ipv6 boolean true
+            ### --- 主机名与用户 ---
+            d-i netcfg/get_hostname string {hostname}
+            d-i netcfg/get_domain string local
 
-                  ### --- 主机名与用户 ---
-                  d-i netcfg/get_hostname string {hostname}
-                  d-i netcfg/get_domain string local
+            # Root 用户
+            d-i passwd/root-password password {hashed_pw}
+            d-i passwd/root-password-again password {hashed_pw}
+            d-i passwd/root-login boolean true
 
-                  # Root 用户
-                  d-i passwd/root-password password {hashed_pw}
-                  d-i passwd/root-password-again password {hashed_pw}
-                  d-i passwd/root-login boolean true
+            # 普通用户
+            d-i passwd/make-user boolean true
+            d-i passwd/user-fullname string User
+            d-i passwd/username string debian
+            d-i passwd/user-password password {hashed_pw}
+            d-i passwd/user-password-again password {hashed_pw}
+            d-i user-uid string 1000
 
-                  # 普通用户
-                  d-i passwd/make-user boolean true
-                  d-i passwd/user-fullname string User
-                  d-i passwd/username string debian
-                  d-i passwd/user-password password {hashed_pw}
-                  d-i passwd/user-password-again password {hashed_pw}
-                  d-i user-uid string 1000
+            ### --- 磁盘自动分区 ---
+            d-i partman-auto/disk string /dev/sda
+            d-i partman-auto/method string lvm
+            d-i partman-auto-lvm/guided_size string max
+            d-i partman-auto-lvm/new_vg_name string vg0
+            d-i partman-auto/choose_recipe select atomic
+            d-i partman/alignment string optimal
+            d-i partman-lvm/device_remove_lvm boolean true
+            d-i partman-md/device_remove_md boolean true
+            d-i partman-partitioning/confirm_write_new_label boolean true
+            d-i partman/confirm_write_new_label boolean true
+            d-i partman-lvm/confirm boolean true
+            d-i partman-lvm/confirm_nooverwrite boolean true
+            d-i partman/choose_partition select finish
+            d-i partman/confirm boolean true
+            d-i partman/confirm_nooverwrite boolean true
 
-                  ### --- 分区（自动 LVM） ---
-                  d-i partman-auto/disk string /dev/sda
-                  d-i partman-auto/method string lvm
-                  d-i partman-auto-lvm/guided_size string max
-                  d-i partman-auto-lvm/new_vg_name string vg0
-                  d-i partman-auto/choose_recipe select atomic
-                  d-i partman/alignment string optimal
+            ### --- 软件与包管理 ---
+            tasksel tasksel/first multiselect
+            d-i pkgsel/include string openssh-server
+            d-i base-installer/install-recommends boolean false
+            d-i pkgsel/install-language-support boolean false
+            d-i pkgsel/upgrade select none
+            popularity-contest popularity-contest/participate boolean false
 
-                  # 必须的自动确认
-                  d-i partman-lvm/device_remove_lvm boolean true
-                  d-i partman-md/device_remove_md boolean true
-                  d-i partman/confirm_write_new_label boolean true
-                  d-i partman/confirm boolean true
-                  d-i partman-lvm/confirm boolean true
-                  d-i partman-lvm/confirm_nooverwrite boolean true
-                  d-i partman/confirm_nooverwrite boolean true
+            d-i apt-setup/use_mirror boolean true
 
-                  ### --- 软件与包管理（提速优化） ---
-                  tasksel tasksel/first multiselect minimal
-                  d-i pkgsel/install-language-support boolean false
-                  d-i pkgsel/include string openssh-server
+            d-i mirror/country string manual
+            d-i mirror/http/hostname string deb.debian.org
+            d-i mirror/http/directory string /debian
+            d-i mirror/http/proxy string
 
-                  # 禁用推荐包（减少安装量、显著提速）
-                  d-i base-installer/install-recommends boolean false
+            ### --- 禁用扫描额外安装介质 ---
+            d-i apt-setup/cdrom/set-first boolean false
+            d-i apt-setup/cdrom/autodetect boolean false
+            d-i hw-detect/load_firmware boolean false
 
-                  # 不升级系统，加快速度
-                  d-i pkgsel/upgrade select none
+            ### --- GRUB 引导 ---
+            d-i grub-installer/only_debian boolean true
+            d-i grub-installer/bootdev string /dev/sda
 
-                  # 禁用 popularity-contest
-                  popularity-contest popularity-contest/participate boolean false
-
-                  # 避免下载翻译文件（大幅减少 apt 更新时间）
-                  d-i apt-setup/disable-cdrom-entries boolean true
-                  d-i apt-setup/services-select multiselect security
-
-                  d-i apt-setup/use_mirror boolean true
-                  d-i mirror/country string manual
-                  d-i mirror/http/hostname string deb.debian.org
-                  d-i mirror/http/directory string /debian
-                  d-i mirror/http/proxy string
-
-                  # 禁用 apt 翻译文件
-                  d-i apt-setup/disable-source-repos boolean true
-
-                  ### --- 禁用扫描额外安装介质 ---
-                  d-i apt-setup/cdrom/set-first boolean false
-                  d-i apt-setup/cdrom/autodetect boolean false
-
-                  ### --- GRUB ---
-                  d-i grub-installer/only_debian boolean true
-                  d-i grub-installer/bootdev string /dev/sda
-                  d-i grub-installer/skip boolean false
-
-                  ### --- 安装后脚本，可选 ---
-                  # 自定义命令也能加速环境初始化
-                  #d-i preseed/late_command string echo "root ALL=(ALL) NOPASSWD: ALL" >> /target/etc/sudoers
-
-                  ### --- 完成安装 ---
-                  d-i finish-install/reboot_in_progress note
-
+            ### --- 完成安装 ---
+            d-i finish-install/reboot_in_progress note
         """).strip()
 
         # 写入本地文件
