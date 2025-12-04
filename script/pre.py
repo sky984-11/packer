@@ -136,6 +136,8 @@ def generate_file(
             d-i pkgsel/upgrade select none
             popularity-contest popularity-contest/participate boolean false
 
+            d-i apt-setup/use_mirror boolean true
+
             d-i mirror/country string manual
             d-i mirror/http/hostname string deb.debian.org
             d-i mirror/http/directory string /debian
