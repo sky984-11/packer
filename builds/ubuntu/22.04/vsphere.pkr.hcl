@@ -33,11 +33,11 @@ source "vsphere-iso" "this" {
   http_directory = "http/${var.os_type}/${var.os_version}"
   boot_wait = "2s"
   boot_keygroup_interval = "5ms"
-  
+
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [
     "c",
-    "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=${var.vm_ip}::${var.vm_gateway}:${var.vm_netmask}:${var.vm_name}:ens192:none",
+    "linux /casper/vmlinuz --- autoinstall quiet 'ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/' ip=${var.vm_ip}::${var.vm_gateway}:${var.vm_netmask}:${var.vm_name}:ens192:none dns=${var.vm_dns}",
     "<enter>",
     "initrd /casper/initrd",
     "<enter>",

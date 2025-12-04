@@ -27,7 +27,7 @@ def run_packer_build():
         "vm_disk_size": "20144",
 
         "os_type": "ubuntu",
-        "os_version": "12",
+        "os_version": "22.04",
 
         "annotation": "Created by Packer"
     }
