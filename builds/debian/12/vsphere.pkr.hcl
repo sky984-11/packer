@@ -33,11 +33,10 @@ source "vsphere-iso" "this" {
   }
   http_directory = "http/${var.os_type}/${var.os_version}"
   boot_wait = "2s"
-  boot_key_interval  = "5ms"
-  
+
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [
-    "<esc><wait>",
+    "<esc><wait0.5s>",
     "install ",
     "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
     "debian-installer=en_US.UTF-8 auto locale=en_US.UTF-8 ",
