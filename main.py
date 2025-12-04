@@ -7,12 +7,12 @@ def run_packer_build():
 
     # 所有构建参数集中到一个字典，方便维护
     config = {
-        "vm_name": "tf-debian",
+        "vm_name": "tf-ubuntu",
         "vm_ip": "10.1.10.200",
         "vm_gateway": "10.1.10.1",
         "vm_netmask": "255.255.255.0",
         "vm_dns": "8.8.8.8",
-        "ssh_username": "debian",
+        "ssh_username": "ubuntu",
         "ssh_password": "test123",
 
         "vsphere_server": "10.1.10.18",
@@ -26,7 +26,7 @@ def run_packer_build():
         "vm_ram": "2048",
         "vm_disk_size": "20144",
 
-        "os_type": "debian",
+        "os_type": "ubuntu",
         "os_version": "12",
 
         "annotation": "Created by Packer"

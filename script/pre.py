@@ -25,20 +25,11 @@ def generate_file(
         #cloud-config
         autoinstall:
           version: 1
-          locale: en_US.UTF-8
-          keyboard:
-            layout: us
-          timezone: Asia/Hong_Kong
           ssh:
             install-server: true
             allow-pw: true
           packages:
             - qemu-guest-agent
-          storage:
-            layout:
-              name: direct
-            swap:
-              size: 0
           network:
             version: 2
             ethernets:
