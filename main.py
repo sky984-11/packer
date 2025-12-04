@@ -8,23 +8,23 @@ def run_packer_build():
     # 所有构建参数集中到一个字典，方便维护
     config = {
         "vm_name": "tf-debian",
-        "vm_ip": "45.67.201.205",
-        "vm_gateway": "45.67.201.193",
-        "vm_netmask": "255.255.255.240",
+        "vm_ip": "10.1.10.200",
+        "vm_gateway": "10.1.10.1",
+        "vm_netmask": "255.255.255.0",
         "vm_dns": "8.8.8.8",
         "ssh_username": "debian",
         "ssh_password": "test123",
 
-        "vsphere_server": "10.4.10.140",
+        "vsphere_server": "10.1.10.18",
         "vsphere_user": "root",
         "vsphere_password": "Catixs@3202",
-        "datastore": "HK_DATA",
-        "network_name": "VLAN 3917",
+        "datastore": "datastore2_nvme",
+        "network_name": "VLAN 10",
         "cluster": "localhost",
 
         "vm_cpus": "2",
         "vm_ram": "2048",
-        "vm_disk_size": "22144",
+        "vm_disk_size": "20144",
 
         "os_type": "debian",
         "os_version": "12",
