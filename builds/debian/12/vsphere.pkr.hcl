@@ -32,7 +32,9 @@ source "vsphere-iso" "this" {
     network_card = "vmxnet3"
   }
   http_directory = "http/${var.os_type}/${var.os_version}"
-  boot_wait = "5s"
+  boot_wait = "2s"
+  boot_key_interval  = "5ms"
+  
   # 这里使用静态IP，如果dhcp则去掉ip后面的一串内容
   boot_command = [
     "<esc><wait>",
