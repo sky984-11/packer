@@ -124,7 +124,7 @@ def generate_file(
             d-i partman/confirm_nooverwrite boolean true
 
             ### --- 软件与包管理 ---
-            tasksel tasksel/first multiselect
+            tasksel tasksel/first multiselect standard
             d-i pkgsel/include string openssh-server
             d-i base-installer/install-recommends boolean false
             d-i pkgsel/install-language-support boolean false
